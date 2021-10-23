@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 interface IRowBlockProps {
   containerStyles?: any;
-  backgroundColor: string;
+  backgroundColor?: string;
   height?: string;
   children: ReactNode
 }
@@ -21,6 +21,8 @@ export function RowBlock({ containerStyles, backgroundColor, height, children }:
       flexWrap='wrap'
       justifyContent='space-around'
       alignItems='center'
+      paddingY={10}
+      gridGap={2}
     >
       {children}
     </Box>

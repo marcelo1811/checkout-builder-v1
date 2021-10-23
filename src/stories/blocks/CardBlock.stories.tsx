@@ -7,15 +7,7 @@ export default {
   component: CardBlock,
 }
 
-const Template: ComponentStory<typeof CardBlock> = (args) => {
-  return (
-    // <Box width='500px' height='300px' bg='white' justifyContent='center' alignItems='center' display='flex'>
-      // Shadows doesn't appear on storybook, run o react
-      <CardBlock {...args} />
-    // </Box>
-  )
-}
-;
+const Template: ComponentStory<typeof CardBlock> = (args) => <CardBlock {...args} />;
 
 export const Basic = Template.bind({});
 
