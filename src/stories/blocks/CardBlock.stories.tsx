@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/layout";
 import { ComponentStory } from "@storybook/react";
 import { CardBlock } from "blocks/CardBlock";
 
@@ -16,4 +15,4 @@ Basic.args = {
   description: 'Exemplos da vida real e código',
   bgColor: 'white',
   fontColor: 'rgb(3, 224, 2)',
-}
+};
