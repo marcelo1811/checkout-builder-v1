@@ -1,6 +1,6 @@
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from "@chakra-ui/react"
-import { HomePage } from "./pages/HomePage";
+import { HomePage } from "pages/HomePage";
 
 
 function App() {
