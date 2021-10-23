@@ -1,4 +1,5 @@
 import { Box, Text } from "@chakra-ui/layout";
+import { CardBlock } from "blocks/CardBlock";
 import { RowBlock } from "blocks/RowBlock";
 import { useState } from "react";
 
@@ -7,15 +8,18 @@ export function HomePage() {
 
   return (
     <Box
-      bg='red'
       height='100vh'
       width='100vw'
     >
       <Text>HomePage</Text>
       <RowBlock
-        backgroundColor='green'
+        backgroundColor='transparent'
       >
-        <Text>oi</Text>
+        <CardBlock
+          title='Teste'
+          bgColor='white'
+          description='Compre agora'
+        />
       </RowBlock>
     </Box>
   )

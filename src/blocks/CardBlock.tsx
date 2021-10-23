@@ -22,6 +22,7 @@ export function CardBlock({ title, description, bgColor, containerStyles, fontCo
       minWidth='250px'
       maxWidth='360px'
       width='280px'
+      boxShadow='base'
     >
       <Text
         color={fontColor}
