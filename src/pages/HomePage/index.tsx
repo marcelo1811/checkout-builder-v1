@@ -1,7 +1,10 @@
 import { Box, Text } from "@chakra-ui/layout";
-import { Container } from "@chakra-ui/react";
+import { RowBlock } from "blocks/RowBlock";
+import { useState } from "react";
 
 export function HomePage() {
+  const [cards, setCards] = useState<any[]>([]);
+
   return (
     <Box
       bg='red'
@@ -9,6 +12,11 @@ export function HomePage() {
       width='100vw'
     >
       <Text>HomePage</Text>
+      <RowBlock
+        backgroundColor='green'
+      >
+        <Text>oi</Text>
+      </RowBlock>
     </Box>
   )
 }
