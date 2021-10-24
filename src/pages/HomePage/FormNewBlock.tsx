@@ -26,7 +26,7 @@ const InputByType = ({ type, placeholder }: IInputByType) => {
     <Input placeholder={placeholder} />
   ) : type === InputTypes.Number ? (
     <NumberInput>
-      <NumberInputField />
+      <NumberInputField placeholder={placeholder} />
     </NumberInput>
   ) : null
 }
@@ -34,7 +34,7 @@ const InputByType = ({ type, placeholder }: IInputByType) => {
 export function FormNewBlock({ containerStyles, block }: IFormNewBlockProps) {
   return (
     <Box style={containerStyles}>
-      {block.block_props.map ((blockProp) => {
+      {block.required_props.map ((blockProp) => {
         return (
           <InputByType type={blockProp.type} placeholder={blockProp.name} />
         )

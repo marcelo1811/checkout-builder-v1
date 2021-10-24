@@ -12,7 +12,7 @@ export interface IBlockProps {
 }
 export interface IBlock {
   name: string;
-  block_props: IBlockProps[]
+  required_props: IBlockProps[],
 }
 
 createServer({
@@ -22,7 +22,7 @@ createServer({
     this.get('/blocks', () => [
           {
             name: 'CardBlock',
-            block_props: [
+            required_props: [
               {
                 name: 'title',
                 type: 'string',
@@ -52,7 +52,7 @@ createServer({
           },
           {
             name: 'RowBlock',
-            block_props: [
+            required_props: [
               {
                 name: 'bgColor',
                 type: 'string',
@@ -84,6 +84,7 @@ export function HomePage() {
   const [blocks, setBlocks] = useState<IBlock[]>([]);
   // const [showNewBlockModal, setShowNewBlockModal] = useState<boolean>(false);
   const [blockToCreate, setBlockToCreate] = useState<IBlock | null>(null);
+  const [createdBlock, setCreatedBlock] = useState<IBlock | null>(null);
 
   useEffect(() => {
     fetchBlocks();
@@ -130,7 +131,7 @@ export function HomePage() {
                 }}
               >
                 <Text fontSize='lg' fontWeight='bold'>{block.name}</Text>
-                {block.block_props.map(blockProp => (
+                {block.required_props.map(blockProp => (
                   <Text color={blockProp.is_required ? 'green' : 'red'}>{blockProp.name} - {blockProp.type}</Text>
                 ))}
               </Box>  
@@ -144,6 +145,11 @@ export function HomePage() {
         {!!blockToCreate && (
           <FormNewBlock block={blockToCreate}/>
         )}
+      </Box>
+
+      
+      <Box>
+        <Heading>Bloco criado com sucesso!</Heading>
       </Box>
     </Box>
   )
