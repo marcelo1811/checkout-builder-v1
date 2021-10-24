@@ -3,7 +3,7 @@ import { CardBlock } from "blocks/CardBlock";
 import { RowBlock } from "blocks/RowBlock";
 import { useState, useCallback, useEffect } from "react";
 import { createServer } from 'miragejs';
-import { ModalNewBlock } from "./ModalNewBlock";
+import { FormNewBlock } from "./FormNewBlock";
 
 export interface IBlockProps {
   name: string;
@@ -142,7 +142,7 @@ export function HomePage() {
       <Box>
         <Heading>Criação de bloco</Heading>
         {!!blockToCreate && (
-          <ModalNewBlock block={blockToCreate}/>
+          <FormNewBlock block={blockToCreate}/>
         )}
       </Box>
     </Box>

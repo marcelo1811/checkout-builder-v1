@@ -3,7 +3,7 @@ import { Box, Text } from "@chakra-ui/layout";
 import { NumberInput, NumberInputField } from "@chakra-ui/number-input";
 import { IBlock } from ".";
 
-interface IModalNewBlockProps {
+interface IFormNewBlockProps {
   containerStyles?: any;
   block: IBlock
 }
@@ -31,7 +31,7 @@ const InputByType = ({ type, placeholder }: IInputByType) => {
   ) : null
 }
 ;
-export function ModalNewBlock({ containerStyles, block }: IModalNewBlockProps) {
+export function FormNewBlock({ containerStyles, block }: IFormNewBlockProps) {
   return (
     <Box style={containerStyles}>
       {block.block_props.map ((blockProp) => {
