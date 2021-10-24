@@ -4,6 +4,7 @@ import { RowBlock } from "blocks/RowBlock";
 import { useState, useCallback, useEffect } from "react";
 import { createServer } from 'miragejs';
 import { FormNewBlock } from "./FormNewBlock";
+import BlockComponents from "blocks";
 
 export interface IBlockProps {
   name: string;
@@ -85,7 +86,7 @@ export function HomePage() {
   const [blocks, setBlocks] = useState<IBlock[]>([]);
   // const [showNewBlockModal, setShowNewBlockModal] = useState<boolean>(false);
   const [blockToCreate, setBlockToCreate] = useState<IBlock | null>(null);
-  const [createdBlock, setCreatedBlock] = useState<IBlock | null>(null);
+  const [createdBlocks, setCreatedBlocks] = useState<IBlock[]>([]);
 
   useEffect(() => {
     fetchBlocks();
@@ -101,8 +102,25 @@ export function HomePage() {
     setBlockToCreate(block);
   };
 
-  const handleCreateBlock = (values: any) => {
+  const handleCreateBlock = (values: any, block: IBlock) => {
     console.log("🚀 ~ file: index.tsx ~ line 106 ~ handleCreateBlock ~ values", values)
+    const newProps = {
+      ...values
+    }
+    const newBlock = {
+      ...block,
+      block_prop_values: newProps
+    }
+    setCreatedBlocks([...createdBlocks, newBlock])
+  }
+
+
+  const BlockToRender = BlockComponents['CardBlock']
+  const blockToRendeProps = {
+    bgColor:'#ffffff',
+    description:'Componente teste',
+    fontColor:'#000000',
+    title:'Teste',
   }
 
   return (
@@ -126,9 +144,9 @@ export function HomePage() {
       >
         <Heading >Blocos</Heading>
         <Box gridGap={2} display='flex'>
-          {blocks.map((block) => {
+          {blocks.map((block, index) => {
             return (
-              <Box padding={10} bgColor='green.300' width={300} onClick={() => handleClickNewBlock(block)}
+              <Box key={index} padding={10} bgColor='green.300' width={300} onClick={() => handleClickNewBlock(block)}
                 _hover={{
                   cursor: 'pointer',
                   opacity: 0.6
@@ -154,6 +172,12 @@ export function HomePage() {
       
       <Box>
         <Heading>Bloco criado com sucesso!</Heading>
+        {createdBlocks.map((createdBlock: IBlock) => {
+          const BlockToRender = BlockComponents[createdBlock.name]
+
+          return <BlockToRender {...createdBlock.block_prop_values} />
+        })}
+        {/* <BlockToRender {...blockToRendeProps}/> */}
       </Box>
     </Box>
   )

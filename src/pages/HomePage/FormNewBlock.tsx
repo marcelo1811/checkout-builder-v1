@@ -3,6 +3,8 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { NumberInput, NumberInputField } from "@chakra-ui/number-input";
 import { IBlock } from ".";
+import { Field, Form, Formik } from 'formik';
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 
 interface IFormNewBlockProps {
   containerStyles?: any;
@@ -20,34 +22,47 @@ enum InputTypes {
 interface IInputByTypeProps {
   type: string;
   placeholder: string;
+  field: any;
 }
 
-const InputByType = ({ type, placeholder }: IInputByTypeProps) => {
+const InputByType = ({ type, placeholder, field }: IInputByTypeProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   return type === InputTypes.String ? (
-    <Input placeholder={placeholder} />
+    <Input placeholder={placeholder} {...field} />
   ) : type === InputTypes.Number ? (
     <NumberInput>
-      <NumberInputField placeholder={placeholder} />
+      <NumberInputField placeholder={placeholder} {...field}/>
     </NumberInput>
   ) : null
-}
-;
-export function FormNewBlock({ containerStyles, block, onCreate }: IFormNewBlockProps) {
-  const handleClickCreate = () => {
-    console.log('cliquei para criar')
-  }
+};
 
+export function FormNewBlock({ containerStyles, block, onCreate }: IFormNewBlockProps) {
   return (
     <Box style={containerStyles}>
-      {block.block_required_props.map ((blockProp) => {
-        return (
-          <InputByType type={blockProp.type} placeholder={blockProp.name} />
-        )
-      })}
-      <Button onClick={handleClickCreate}>
-        Criar bloco
-      </Button>
+      <Formik
+        initialValues={{}}
+        onSubmit={(values, actions) => {
+          onCreate({...values}, block);
+        }}
+      >
+        <Form>
+          {block.block_required_props.map ((blockProp, index) => {
+            return (
+              <Field name={blockProp.name} key={index}>
+                {({ field, form }: any) => (
+                  <FormControl>
+                    <FormLabel htmlFor={blockProp.name}>{blockProp.name}</FormLabel>
+                    <InputByType field={{...field}} type={blockProp.type} placeholder={blockProp.name} />
+                  </FormControl>  
+                )}
+              </Field>  
+            )
+          })}
+          <Button type='submit'>
+            Criar bloco
+          </Button>
+        </Form>
+      </Formik>
     </Box>
   )
 }

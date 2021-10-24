@@ -28,3 +28,5 @@ export function RowBlock({ containerStyles, bgColor, height, children }: IRowBlo
     </Box>
   )
 }
+
+export default RowBlock;

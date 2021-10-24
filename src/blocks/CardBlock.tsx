@@ -33,3 +33,5 @@ export function CardBlock({ title, description, bgColor, containerStyles, fontCo
     </Box>
   )
 }
+
+export default CardBlock;
