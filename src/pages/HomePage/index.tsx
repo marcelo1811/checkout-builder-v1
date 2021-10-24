@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/layout";
+import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
 import { CardBlock } from "blocks/CardBlock";
 import { RowBlock } from "blocks/RowBlock";
 import { useState, useCallback, useEffect } from "react";
@@ -24,6 +24,36 @@ createServer({
     this.get('/blocks', () => [
           {
             name: 'CardBlock',
+            block_required_props: [
+              {
+                name: 'title',
+                type: 'string',
+                is_required: true,
+              },
+              {
+                name: 'description',
+                type: 'string',
+                is_required: false,
+              },
+              {
+                name: 'bgColor',
+                type: 'string',
+                is_required: false,
+              },
+              {
+                name: 'containerStyles',
+                type: 'any',
+                is_required: false,
+              },
+              {
+                name: 'fontColor',
+                type: 'string',
+                is_required: false,
+              },
+            ]
+          },
+          {
+            name: 'RoundedBlock',
             block_required_props: [
               {
                 name: 'title',
@@ -111,7 +141,7 @@ export function HomePage() {
       ...block,
       block_prop_values: newProps
     }
-    setCreatedBlocks([...createdBlocks, newBlock])
+    setCreatedBlocks([newBlock, ...createdBlocks])
   }
 
 
@@ -172,12 +202,13 @@ export function HomePage() {
       
       <Box>
         <Heading>Bloco criado com sucesso!</Heading>
-        {createdBlocks.map((createdBlock: IBlock) => {
-          const BlockToRender = BlockComponents[createdBlock.name]
+        <Flex gridGap={2}>
+          {createdBlocks.map((createdBlock: IBlock) => {
+            const BlockToRender = BlockComponents[createdBlock.name]
 
-          return <BlockToRender {...createdBlock.block_prop_values} />
-        })}
-        {/* <BlockToRender {...blockToRendeProps}/> */}
+            return <BlockToRender {...createdBlock.block_prop_values} />
+          })}
+        </Flex>  
       </Box>
     </Box>
   )

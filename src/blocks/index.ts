@@ -5,5 +5,6 @@ let BlockComponents: any = {};
 
 BlockComponents['CardBlock'] = require('./CardBlock').default;
 BlockComponents['RowBlock'] = require('./RowBlock').default;
+BlockComponents['RoundedBlock'] = require('./RoundedBlock').default;
 
 export default BlockComponents;
