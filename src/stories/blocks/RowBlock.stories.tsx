@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof RowBlock> = (args) => <RowBlock {...args} 
 export const Default = Template.bind({});
 
 Default.args = {
-  backgroundColor: colors.background,
+  bgColor: colors.background,
   children: <>
     <Basic {...Basic.args} />
     <Basic {...Basic.args} />

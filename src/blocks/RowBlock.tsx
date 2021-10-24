@@ -3,15 +3,15 @@ import { ReactNode } from "react";
 
 interface IRowBlockProps {
   containerStyles?: any;
-  backgroundColor?: string;
+  bgColor?: string;
   height?: string;
   children: ReactNode
 }
 
-export function RowBlock({ containerStyles, backgroundColor, height, children }: IRowBlockProps) {
+export function RowBlock({ containerStyles, bgColor, height, children }: IRowBlockProps) {
   return (
     <Box
-      bg={backgroundColor}
+      bg={bgColor}
       height={height}
       style={containerStyles}
       width='100%'
