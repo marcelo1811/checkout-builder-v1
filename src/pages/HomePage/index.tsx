@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
+import { Box, Container, Flex, Heading, Text } from "@chakra-ui/layout";
 import { CardBlock } from "blocks/CardBlock";
 import { RowBlock } from "blocks/RowBlock";
 import { useState, useCallback, useEffect } from "react";
@@ -82,31 +82,31 @@ createServer({
               },
             ]
           },
-          {
-            name: 'RowBlock',
-            block_required_props: [
-              {
-                name: 'bgColor',
-                type: 'string',
-                is_required: false,
-              },
-              {
-                name: 'containerStyles',
-                type: 'any',
-                is_required: false,
-              },
-              {
-                name: 'height',
-                type: 'number',
-                is_required: false,
-              },
-              {
-                name: 'children',
-                type: 'children',
-                is_required: true,
-              }
-            ]
-          }
+          // {
+          //   name: 'RowBlock',
+          //   block_required_props: [
+          //     {
+          //       name: 'bgColor',
+          //       type: 'string',
+          //       is_required: false,
+          //     },
+          //     {
+          //       name: 'containerStyles',
+          //       type: 'any',
+          //       is_required: false,
+          //     },
+          //     {
+          //       name: 'height',
+          //       type: 'number',
+          //       is_required: false,
+          //     },
+          //     {
+          //       name: 'children',
+          //       type: 'children',
+          //       is_required: true,
+          //     }
+          //   ]
+          // }
         ]
       )
     }}
@@ -141,7 +141,7 @@ export function HomePage() {
       ...block,
       block_prop_values: newProps
     }
-    setCreatedBlocks([newBlock, ...createdBlocks])
+    setCreatedBlocks([...createdBlocks, newBlock])
   }
 
 
@@ -154,29 +154,33 @@ export function HomePage() {
   }
 
   return (
-    <Box
+    <Container
       height='100vh'
       width='100vw'
     >
-      <Text>HomePage</Text>
+      <Heading>Blocos fabricados!</Heading>
       <RowBlock
         bgColor='transparent'
       >
-        <CardBlock
-          title='Teste'
-          bgColor='white'
-          description='Compre agora'
-        />
+        {createdBlocks.length > 0 && (
+          <Flex gridGap={2} wrap='wrap'>
+            {createdBlocks.map((createdBlock: IBlock) => {
+              const BlockToRender = BlockComponents[createdBlock.name]
+
+              return <BlockToRender {...createdBlock.block_prop_values} />
+            })}
+          </Flex>  
+        )}
       </RowBlock>
 
       <Box
         bg='gray.100'
       >
-        <Heading >Blocos</Heading>
+        <Heading >Templates</Heading>
         <Box gridGap={2} display='flex'>
           {blocks.map((block, index) => {
             return (
-              <Box key={index} padding={10} bgColor='green.300' width={300} onClick={() => handleClickNewBlock(block)}
+              <Box key={index} padding={10} bgColor={blockToCreate?.name === block.name ? 'green.100' : 'gray.200'} width={300} onClick={() => handleClickNewBlock(block)}
                 _hover={{
                   cursor: 'pointer',
                   opacity: 0.6
@@ -198,18 +202,6 @@ export function HomePage() {
           <FormNewBlock block={blockToCreate} onCreate={handleCreateBlock}/>
         )}
       </Box>
-
-      
-      <Box>
-        <Heading>Bloco criado com sucesso!</Heading>
-        <Flex gridGap={2}>
-          {createdBlocks.map((createdBlock: IBlock) => {
-            const BlockToRender = BlockComponents[createdBlock.name]
-
-            return <BlockToRender {...createdBlock.block_prop_values} />
-          })}
-        </Flex>  
-      </Box>
-    </Box>
+    </Container>
   )
 }
