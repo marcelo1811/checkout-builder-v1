@@ -12,7 +12,8 @@ export interface IBlockProps {
 }
 export interface IBlock {
   name: string;
-  required_props: IBlockProps[],
+  block_required_props: IBlockProps[];
+  block_prop_values: any;
 }
 
 createServer({
@@ -22,7 +23,7 @@ createServer({
     this.get('/blocks', () => [
           {
             name: 'CardBlock',
-            required_props: [
+            block_required_props: [
               {
                 name: 'title',
                 type: 'string',
@@ -52,7 +53,7 @@ createServer({
           },
           {
             name: 'RowBlock',
-            required_props: [
+            block_required_props: [
               {
                 name: 'bgColor',
                 type: 'string',
@@ -97,9 +98,12 @@ export function HomePage() {
   }, []);
 
   const handleClickNewBlock = (block: IBlock) => {
-    console.log("🚀 ~ file: index.tsx ~ line 96 ~ handleClickNewBlock ~ block", block)
     setBlockToCreate(block);
   };
+
+  const handleCreateBlock = (values: any) => {
+    console.log("🚀 ~ file: index.tsx ~ line 106 ~ handleCreateBlock ~ values", values)
+  }
 
   return (
     <Box
@@ -131,7 +135,7 @@ export function HomePage() {
                 }}
               >
                 <Text fontSize='lg' fontWeight='bold'>{block.name}</Text>
-                {block.required_props.map(blockProp => (
+                {block.block_required_props.map(blockProp => (
                   <Text color={blockProp.is_required ? 'green' : 'red'}>{blockProp.name} - {blockProp.type}</Text>
                 ))}
               </Box>  
@@ -143,7 +147,7 @@ export function HomePage() {
       <Box>
         <Heading>Criação de bloco</Heading>
         {!!blockToCreate && (
-          <FormNewBlock block={blockToCreate}/>
+          <FormNewBlock block={blockToCreate} onCreate={handleCreateBlock}/>
         )}
       </Box>
 
