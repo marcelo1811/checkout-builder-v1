@@ -1,15 +1,16 @@
-import { Box, Text } from "@chakra-ui/layout";
+import { Box, Heading, Text } from "@chakra-ui/layout";
 import { CardBlock } from "blocks/CardBlock";
 import { RowBlock } from "blocks/RowBlock";
 import { useState, useCallback, useEffect } from "react";
 import { createServer } from 'miragejs';
+import { ModalNewBlock } from "./ModalNewBlock";
 
-interface IBlockProps {
+export interface IBlockProps {
   name: string;
   type: string;
   is_required: string;
 }
-interface IBlock {
+export interface IBlock {
   name: string;
   block_props: IBlockProps[]
 }
@@ -81,6 +82,8 @@ createServer({
 
 export function HomePage() {
   const [blocks, setBlocks] = useState<IBlock[]>([]);
+  // const [showNewBlockModal, setShowNewBlockModal] = useState<boolean>(false);
+  const [blockToCreate, setBlockToCreate] = useState<IBlock | null>(null);
 
   useEffect(() => {
     fetchBlocks();
@@ -90,7 +93,12 @@ export function HomePage() {
     const res = await fetch('/api/blocks');
     const json = await res.json();
     setBlocks(json);
-  }, [])
+  }, []);
+
+  const handleClickNewBlock = (block: IBlock) => {
+    console.log("🚀 ~ file: index.tsx ~ line 96 ~ handleClickNewBlock ~ block", block)
+    setBlockToCreate(block);
+  };
 
   return (
     <Box
@@ -111,11 +119,16 @@ export function HomePage() {
       <Box
         bg='gray.100'
       >
-        <Text>Blocos</Text>
+        <Heading >Blocos</Heading>
         <Box gridGap={2} display='flex'>
           {blocks.map((block) => {
             return (
-              <Box padding={10} bgColor='green.300' width={300}>
+              <Box padding={10} bgColor='green.300' width={300} onClick={() => handleClickNewBlock(block)}
+                _hover={{
+                  cursor: 'pointer',
+                  opacity: 0.6
+                }}
+              >
                 <Text fontSize='lg' fontWeight='bold'>{block.name}</Text>
                 {block.block_props.map(blockProp => (
                   <Text color={blockProp.is_required ? 'green' : 'red'}>{blockProp.name} - {blockProp.type}</Text>
@@ -124,6 +137,13 @@ export function HomePage() {
             )
           })}
         </Box>
+      </Box>
+
+      <Box>
+        <Heading>Criação de bloco</Heading>
+        {!!blockToCreate && (
+          <ModalNewBlock block={blockToCreate}/>
+        )}
       </Box>
     </Box>
   )
